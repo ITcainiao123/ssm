@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.ProductMapper">
+    <select id="findAll" resultType="product">
+    select * from PRODUCT
+</select>
+    <insert id="add" parameterType="product">
+       insert into PRODUCT ( productNum, productName, cityName, departureTime, productPrice,
+productDesc, productStatus) values (#{productNum},#{productName},#{cityName},#{departureTime},#{productPrice},#{productDesc},#{productStatus})
+    </insert>
+    <update id="deleteByIds" parameterType="string">
+        delete from PRODUCT where ID=#{id}
+    </update>
+    <update id="open" parameterType="string">
+        update PRODUCT SET  PRODUCTSTATUS=1 where ID=#{id}
+    </update>
+    <update id="close" parameterType="string">
+        update PRODUCT SET  PRODUCTSTATUS=0 where ID=#{id}
+    </update>
+    <select id="funzzyQuery" parameterType="pojo" resultType="product">
+        select * from PRODUCT
+        <where>
+            <if test=" pName != null">
+              and PRODUCTNAME like CONCAT(CONCAT('%',#{pName}),'%')
+            </if>
+        </where>
+    </select>
+    <select id="compile" parameterType="string" resultType="product">
+        select * from PRODUCT where ID=#{id}
+    </select>
+    <update id="update" parameterType="product">
+        update PRODUCT SET productNum=#{productNum}, productName=#{productName}, cityName=#{cityName}, departureTime=#{departureTime}, productPrice=#{productPrice},
+productDesc=#{productDesc}, productStatus=#{productStatus} where ID=#{id}
+    </update>
+    <select id="findById" parameterType="string" resultType="product">
+        select * from PRODUCT where ID=#{value}
+    </select>
+</mapper>
